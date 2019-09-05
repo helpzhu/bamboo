@@ -1,12 +1,12 @@
 package com.bamboo.system.controller;
 
-import com.bamboo.system.dao.UserRepository;
-import com.bamboo.system.domain.User;
+import com.bamboo.annotation.WebApiController;
+import com.bamboo.system.api.UserControllerApi;
+import com.bamboo.system.repository.UserRepository;
+import com.bamboo.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -17,22 +17,20 @@ import java.util.List;
  * @data 2019/9/4 15:08
  * @since JDK1.8
  */
-@Controller
+@WebApiController
 @RequestMapping("/user")
-public class UserController {
+public class UserController implements UserControllerApi {
 
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/getUserByName")
-    @ResponseBody
     public List<User> getUserByName() {
         List<User> userList = this.userRepository.getUsersByUserName("admin");
         return userList;
     }
 
     @GetMapping("/getAllUser")
-    @ResponseBody
     public List<User> getAllUser() {
         return this.userRepository.findAll();
     }

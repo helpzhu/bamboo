@@ -1,13 +1,11 @@
 package com.bamboo;
 
-import com.bamboo.system.dao.UserRepository;
-import com.bamboo.system.domain.User;
+import com.bamboo.system.repository.UserRepository;
+import com.bamboo.system.entity.User;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import javax.naming.InitialContext;
 
 /**
  * @author bamboo

@@ -1,4 +1,4 @@
-package com.bamboo.system.domain;
+package com.bamboo.system.entity;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
-package com.bamboo.system.dao;
+package com.bamboo.system.repository;
 
-import com.bamboo.system.domain.User;
+import com.bamboo.system.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
