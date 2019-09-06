@@ -1,5 +1,7 @@
 package com.bamboo.system.service;
 
+import com.bamboo.system.entity.User;
+
 /**
  * @author XuZhu
  * @version 1.0
@@ -8,4 +10,6 @@ package com.bamboo.system.service;
  * @since JDK1.8
  */
 public interface UserService {
+
+    User getUserByUserName(String UserName);
 }

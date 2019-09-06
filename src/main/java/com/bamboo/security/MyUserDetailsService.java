@@ -1,16 +1,16 @@
 package com.bamboo.security;
 
-import com.bamboo.security.User.MyUserVo;
+import com.bamboo.security.User.SecurityUserVo;
+import com.bamboo.system.entity.User;
+import com.bamboo.system.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @author bamboo
@@ -22,20 +22,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final static Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-        MyUserVo userVo = new MyUserVo();
-        userVo.setName(username);
-        userVo.setPassword(this.passwordEncoder.encode("admin"));
+        User userVo = this.userService.getUserByUserName(userName);
 
-        logger.info("encode password：" + userVo.getPassword());
-
-        return new User(username, userVo.getPassword(), true, true, true, true, AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        logger.info("userName:{}, encode password:{}", userName, userVo.getPassword());
+        return new SecurityUserVo(userVo.getUserName(), userVo.getPassword(),
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
 }
