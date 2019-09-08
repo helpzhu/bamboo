@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author bamboo
  * @version 1.0
  * @desc
- * @data 2019/9/3 20:04
+ * @date 2019/9/3 20:04
  * @since JDK1.8
  */
 @SpringBootApplication

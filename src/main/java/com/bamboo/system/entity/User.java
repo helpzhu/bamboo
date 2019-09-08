@@ -6,7 +6,7 @@ import javax.persistence.*;
  * @author bamboo
  * @version 1.0
  * @desc
- * @data 2019/9/4 14:54
+ * @date 2019/9/4 14:54
  * @since JDK1.8
  */
 @Entity

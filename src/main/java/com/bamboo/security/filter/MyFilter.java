@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author bamboo
  * @version 1.0
  * @desc
- * @data 2019/9/6 14:48
+ * @date 2019/9/6 14:48
  * @since JDK1.8
  */
 public class MyFilter extends GenericFilterBean {

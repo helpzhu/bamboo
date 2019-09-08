@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author bamboo
  * @version 1.0
  * @desc
- * @data 2019/9/5 9:54
+ * @date 2019/9/5 9:54
  * @since JDK1.8
  */
 @Configuration
