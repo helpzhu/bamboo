@@ -1,7 +1,7 @@
 package com.bamboo.security;
 
 import com.bamboo.security.User.SelfUserVo;
-import com.bamboo.system.entity.User;
+import com.bamboo.system.entity.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class SelfUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-        User userVo = this.userService.getUserByUserName(userName);
+        SelfUser userVo = this.userService.getUserByUserName(userName);
 
         if (userVo == null) {
             throw new UsernameNotFoundException("用户名不存在");

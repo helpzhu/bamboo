@@ -1,6 +1,6 @@
 package com.bamboo.system.service.impl;
 
-import com.bamboo.system.entity.User;
+import com.bamboo.system.entity.SelfUser;
 import com.bamboo.system.repository.UserRepository;
 import com.bamboo.system.service.UserService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User getUserByUserName(String userName) {
-        List<User> userList = this.userRepository.getUsersByUserName(userName);
+    public SelfUser getUserByUserName(String userName) {
+        List<SelfUser> userList = this.userRepository.getUsersByUserName(userName);
 
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList.get(0);
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<SelfUser> getAllUser() {
         return this.userRepository.findAll();
     }
 }

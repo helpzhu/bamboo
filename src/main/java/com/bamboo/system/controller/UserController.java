@@ -4,7 +4,7 @@ import com.bamboo.annotation.WebApiController;
 import com.bamboo.base.ResultVo;
 import com.bamboo.constant.SelfConstant;
 import com.bamboo.system.api.UserControllerApi;
-import com.bamboo.system.entity.User;
+import com.bamboo.system.entity.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,11 @@ public class UserController implements UserControllerApi {
 
     @GetMapping("/getUserByName")
     @Override
-    public ResultVo<User> getUserByUserName(String userName) {
+    public ResultVo<SelfUser> getUserByUserName(String userName) {
         ResultVo resultVo = new ResultVo();
         try {
             if (StringUtils.isNotBlank(userName)) {
-                User user = this.userService.getUserByUserName(userName);
+                SelfUser user = this.userService.getUserByUserName(userName);
                 resultVo.setResult(SelfConstant.SUCCESS);
                 resultVo.setData(user);
             } else {
@@ -50,10 +50,10 @@ public class UserController implements UserControllerApi {
     }
 
     @GetMapping("/getAllUser")
-    public ResultVo<List<User>> getAllUser() {
+    public ResultVo<List<SelfUser>> getAllUser() {
         ResultVo resultVo = new ResultVo();
         try {
-            List<User> userList = this.userService.getAllUser();
+            List<SelfUser> userList = this.userService.getAllUser();
             resultVo.setResult(SelfConstant.SUCCESS);
             resultVo.setData(userList);
         } catch (Exception e) {
@@ -65,7 +65,7 @@ public class UserController implements UserControllerApi {
 
     @PostMapping("/insertUser")
     @Override
-    public ResultVo insertUser(@RequestBody User user) {
+    public ResultVo insertUser(@RequestBody SelfUser user) {
         ResultVo resultVo = new ResultVo();
         try {
 
@@ -78,7 +78,7 @@ public class UserController implements UserControllerApi {
 
     @PostMapping("/updateUser")
     @Override
-    public ResultVo updateUser(@RequestBody User user) {
+    public ResultVo updateUser(@RequestBody SelfUser user) {
         ResultVo resultVo = new ResultVo();
         try {
 

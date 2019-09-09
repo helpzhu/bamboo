@@ -1,6 +1,6 @@
 package com.bamboo.system.repository;
 
-import com.bamboo.system.entity.User;
+import com.bamboo.system.entity.SelfUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @since JDK1.8
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<SelfUser, Integer> {
 
-    List<User> getUsersByUserName(String userName);
+    List<SelfUser> getUsersByUserName(String userName);
 }

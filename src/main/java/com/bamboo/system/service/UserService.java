@@ -1,6 +1,6 @@
 package com.bamboo.system.service;
 
-import com.bamboo.system.entity.User;
+import com.bamboo.system.entity.SelfUser;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ public interface UserService {
      * @param userName
      * @return
      */
-    User getUserByUserName(String userName);
+    SelfUser getUserByUserName(String userName);
 
     /**
      * 查询所有用户信息
      * @return
      */
-    List<User> getAllUser();
+    List<SelfUser> getAllUser();
 }

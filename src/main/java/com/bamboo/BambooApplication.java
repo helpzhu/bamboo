@@ -1,7 +1,7 @@
 package com.bamboo;
 
 import com.bamboo.system.repository.UserRepository;
-import com.bamboo.system.entity.User;
+import com.bamboo.system.entity.SelfUser;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,12 +21,12 @@ public class BambooApplication {
     @Bean
     InitializingBean saveUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return () -> {
-            User user = new User();
+            SelfUser user = new SelfUser();
             user.setUserName("admin");
             user.setPassword(passwordEncoder.encode("admin"));
             userRepository.save(user);
 
-            User user1 = new User();
+            SelfUser user1 = new SelfUser();
             user1.setUserName("test");
             user1.setPassword(passwordEncoder.encode("test"));
             userRepository.save(user1);

@@ -1,7 +1,7 @@
 package com.bamboo.system.api;
 
 import com.bamboo.base.ResultVo;
-import com.bamboo.system.entity.User;
+import com.bamboo.system.entity.SelfUser;
 import io.swagger.annotations.*;
 
 import java.util.List;
@@ -27,16 +27,16 @@ public interface UserControllerApi {
     String TAG_NAME = "user";
 
     @ApiOperation(value = "根据用户名获取用户信息用户信息", tags = TAG_NAME)
-    ResultVo<User> getUserByUserName(@ApiParam(value = "用户名", required = true) String userName);
+    ResultVo<SelfUser> getUserByUserName(@ApiParam(value = "用户名", required = true) String userName);
 
     @ApiOperation(value = "获取所有用户信息", notes = "user", tags = TAG_NAME)
-    ResultVo<List<User>> getAllUser();
+    ResultVo<List<SelfUser>> getAllUser();
 
     @ApiOperation(value = "添加用户信息", notes = "user", tags = TAG_NAME)
-    ResultVo insertUser(@ApiParam(value = "用户信息", required = true) User user);
+    ResultVo insertUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
 
     @ApiOperation(value = "修改用户信息", notes = "user", tags = TAG_NAME)
-    ResultVo updateUser(@ApiParam(value = "用户信息", required = true) User user);
+    ResultVo updateUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
 
     @ApiOperation(value = "删除用户信息", notes = "user", tags = TAG_NAME)
     ResultVo deleteUser(@ApiParam(value = "用户id", required = true) Integer userId);
