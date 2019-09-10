@@ -1,13 +1,16 @@
 package com.bamboo.system.controller;
 
 import com.bamboo.annotation.WebApiController;
-import com.bamboo.base.ResultVo;
+import com.bamboo.base.ResponsePagingVo;
+import com.bamboo.base.ResponseVo;
 import com.bamboo.constant.SelfConstant;
 import com.bamboo.system.api.UserControllerApi;
-import com.bamboo.system.entity.SelfUser;
+import com.bamboo.system.condition.SelfUserCondition;
+import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +34,8 @@ public class UserController implements UserControllerApi {
 
     @GetMapping("/getUserByName")
     @Override
-    public ResultVo<SelfUser> getUserByUserName(String userName) {
-        ResultVo resultVo = new ResultVo();
+    public ResponseVo<SelfUser> getUserByUserName(String userName) {
+        ResponseVo resultVo = new ResponseVo();
         try {
             if (StringUtils.isNotBlank(userName)) {
                 SelfUser user = this.userService.getUserByUserName(userName);
@@ -49,13 +52,18 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
-    @GetMapping("/getAllUser")
-    public ResultVo<List<SelfUser>> getAllUser() {
-        ResultVo resultVo = new ResultVo();
+    @GetMapping("/getUserPaging")
+    @Override
+    public ResponsePagingVo getUserPaging(@RequestBody SelfUserCondition condition) {
+        ResponsePagingVo resultVo = new ResponsePagingVo();
         try {
-            List<SelfUser> userList = this.userService.getAllUser();
+            Page<SelfUser> selfUserPage = this.userService.getUserPaging(condition);
+            resultVo.setTotalPages(selfUserPage.getTotalPages());
+            resultVo.setTotalRows(selfUserPage.getTotalElements());
+            resultVo.setPageNum(selfUserPage.getNumber());
+            resultVo.setPageSize(selfUserPage.getSize());
             resultVo.setResult(SelfConstant.SUCCESS);
-            resultVo.setData(userList);
+            resultVo.setData(selfUserPage.getContent());
         } catch (Exception e) {
             resultVo.setMessage("查询出错");
             resultVo.setResult(SelfConstant.FAIL);
@@ -65,8 +73,8 @@ public class UserController implements UserControllerApi {
 
     @PostMapping("/insertUser")
     @Override
-    public ResultVo insertUser(@RequestBody SelfUser user) {
-        ResultVo resultVo = new ResultVo();
+    public ResponseVo insertUser(@RequestBody SelfUser user) {
+        ResponseVo resultVo = new ResponseVo();
         try {
 
         } catch (Exception e) {
@@ -78,8 +86,8 @@ public class UserController implements UserControllerApi {
 
     @PostMapping("/updateUser")
     @Override
-    public ResultVo updateUser(@RequestBody SelfUser user) {
-        ResultVo resultVo = new ResultVo();
+    public ResponseVo updateUser(@RequestBody SelfUser user) {
+        ResponseVo resultVo = new ResponseVo();
         try {
 
         } catch (Exception e) {
@@ -91,8 +99,8 @@ public class UserController implements UserControllerApi {
 
     @PostMapping("/deleteUser")
     @Override
-    public ResultVo deleteUser(Integer userId) {
-        ResultVo resultVo = new ResultVo();
+    public ResponseVo deleteUser(Integer userId) {
+        ResponseVo resultVo = new ResponseVo();
         try {
 
         } catch (Exception e) {

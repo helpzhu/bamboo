@@ -1,7 +1,7 @@
 package com.bamboo;
 
-import com.bamboo.system.repository.UserRepository;
-import com.bamboo.system.entity.SelfUser;
+import com.bamboo.system.dao.UserRepository;
+import com.bamboo.system.domain.SelfUser;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

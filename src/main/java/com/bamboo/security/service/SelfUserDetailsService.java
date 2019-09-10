@@ -1,7 +1,7 @@
 package com.bamboo.security;
 
 import com.bamboo.security.User.SelfUserVo;
-import com.bamboo.system.entity.SelfUser;
+import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

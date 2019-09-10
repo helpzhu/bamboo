@@ -1,4 +1,4 @@
-package com.bamboo.system.entity;
+package com.bamboo.system.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;

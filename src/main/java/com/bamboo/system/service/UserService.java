@@ -1,6 +1,8 @@
 package com.bamboo.system.service;
 
-import com.bamboo.system.entity.SelfUser;
+import com.bamboo.system.condition.SelfUserCondition;
+import com.bamboo.system.domain.SelfUser;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -25,4 +27,11 @@ public interface UserService {
      * @return
      */
     List<SelfUser> getAllUser();
+
+    /**
+     * 分页查询用户信息
+     * @param condition
+     * @return
+     */
+    Page<SelfUser> getUserPaging(SelfUserCondition condition);
 }

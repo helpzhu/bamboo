@@ -1,7 +1,9 @@
 package com.bamboo.system.api;
 
-import com.bamboo.base.ResultVo;
-import com.bamboo.system.entity.SelfUser;
+import com.bamboo.base.ResponsePagingVo;
+import com.bamboo.base.ResponseVo;
+import com.bamboo.system.condition.SelfUserCondition;
+import com.bamboo.system.domain.SelfUser;
 import io.swagger.annotations.*;
 
 import java.util.List;
@@ -27,17 +29,17 @@ public interface UserControllerApi {
     String TAG_NAME = "user";
 
     @ApiOperation(value = "根据用户名获取用户信息用户信息", tags = TAG_NAME)
-    ResultVo<SelfUser> getUserByUserName(@ApiParam(value = "用户名", required = true) String userName);
+    ResponseVo<SelfUser> getUserByUserName(@ApiParam(value = "用户名", required = true) String userName);
 
     @ApiOperation(value = "获取所有用户信息", notes = "user", tags = TAG_NAME)
-    ResultVo<List<SelfUser>> getAllUser();
+    ResponsePagingVo getUserPaging(@ApiParam(value = "查询VO") SelfUserCondition condition);
 
     @ApiOperation(value = "添加用户信息", notes = "user", tags = TAG_NAME)
-    ResultVo insertUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
+    ResponseVo insertUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
 
     @ApiOperation(value = "修改用户信息", notes = "user", tags = TAG_NAME)
-    ResultVo updateUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
+    ResponseVo updateUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
 
     @ApiOperation(value = "删除用户信息", notes = "user", tags = TAG_NAME)
-    ResultVo deleteUser(@ApiParam(value = "用户id", required = true) Integer userId);
+    ResponseVo deleteUser(@ApiParam(value = "用户id", required = true) Integer userId);
 }
