@@ -28,8 +28,8 @@ public interface UserControllerApi {
 
     String TAG_NAME = "user";
 
-    @ApiOperation(value = "根据用户名获取用户信息用户信息", tags = TAG_NAME)
-    ResponseVo<SelfUser> getUserByUserName(@ApiParam(value = "用户名", required = true) String userName);
+    @ApiOperation(value = "根据用户账号获取用户信息用户信息", tags = TAG_NAME)
+    ResponseVo<SelfUser> getUserByUserAccount(@ApiParam(value = "用户账号", required = true) String userAccount);
 
     @ApiOperation(value = "获取所有用户信息", notes = "user", tags = TAG_NAME)
     ResponsePagingVo getUserPaging(@ApiParam(value = "查询VO") SelfUserCondition condition);
@@ -41,5 +41,5 @@ public interface UserControllerApi {
     ResponseVo updateUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
 
     @ApiOperation(value = "删除用户信息", notes = "user", tags = TAG_NAME)
-    ResponseVo deleteUser(@ApiParam(value = "用户id", required = true) Integer userId);
+    ResponseVo deleteUser(@ApiParam(value = "用户id", required = true) Long userId);
 }

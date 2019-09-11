@@ -18,9 +18,9 @@ import java.util.List;
  * @since JDK1.8
  */
 @Repository
-public interface UserRepository extends JpaRepository<SelfUser, Integer>, JpaSpecificationExecutor<SelfUser>{
+public interface UserRepository extends JpaRepository<SelfUser, Long>, JpaSpecificationExecutor<SelfUser>{
 
-    List<SelfUser> getUsersByUserName(String userName);
+    List<SelfUser> getUsersByUserAccount(String userAccount);
 
     Page<SelfUser> findAll(Specification<SelfUser> userName, Pageable pageable);
 }

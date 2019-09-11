@@ -16,11 +16,32 @@ import java.util.List;
 public interface UserService {
 
     /**
-     * 根据用户名查询用户信息
-     * @param userName
+     * 添加用户
+     * @param user
      * @return
      */
-    SelfUser getUserByUserName(String userName);
+    String insertUser(SelfUser user);
+
+    /**
+     * 修改用户
+     * @param user
+     * @return
+     */
+    String updateUser(SelfUser user);
+
+    /**
+     * 删除用户
+     * @param userId
+     * @return
+     */
+    String deleteUser(Long userId);
+
+    /**
+     * 根据用户账号查询用户信息
+     * @param userAccount
+     * @return
+     */
+    SelfUser getUserByUserAccount(String userAccount);
 
     /**
      * 查询所有用户信息

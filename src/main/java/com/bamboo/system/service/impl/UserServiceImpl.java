@@ -1,11 +1,13 @@
 package com.bamboo.system.service.impl;
 
+import com.bamboo.constant.SelfConstant;
 import com.bamboo.system.condition.SelfUserCondition;
 import com.bamboo.system.dao.UserRepository;
 import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +20,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author bamboo
@@ -34,9 +38,42 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public SelfUser getUserByUserName(String userName) {
-        List<SelfUser> userList = this.userRepository.getUsersByUserName(userName);
+    public String insertUser(SelfUser user) {
+        SelfUser selfUser = this.getUserByUserAccount(user.getUserAccount());
+        if (selfUser != null) {
+            return "用户账号：" + user.getUserAccount() + "已经存在，不能重复添加";
+        }
+        user.setUuId(UUID.randomUUID().toString());
+        user.setStatus(SelfConstant.NORMAL);
+        user.setCreateTime(new Date());
+        this.userRepository.save(user);
+        return SelfConstant.SUCCESS;
+    }
 
+    @Override
+    public String updateUser(SelfUser user) {
+        SelfUser selfUser = this.userRepository.getOne(user.getUserId());
+        if (selfUser == null) {
+            return "用户账号：" + user.getUserAccount() + "不存在，无法修改";
+        }
+        user.setModifyTime(new Date());
+        this.userRepository.save(user);
+        return SelfConstant.SUCCESS;
+    }
+
+    @Override
+    public String deleteUser(Long userId) {
+        SelfUser selfUser = this.userRepository.getOne(userId);
+        if (selfUser == null) {
+            return "用户账号不存在，请重新操作";
+        }
+        this.userRepository.deleteById(userId);
+        return SelfConstant.SUCCESS;
+    }
+
+    @Override
+    public SelfUser getUserByUserAccount(String userAccount) {
+        List<SelfUser> userList = this.userRepository.getUsersByUserAccount(userAccount);
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList.get(0);
         }

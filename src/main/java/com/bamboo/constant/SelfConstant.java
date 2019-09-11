@@ -19,4 +19,14 @@ public class SelfConstant {
      */
     public static final String FAIL = "fail";
 
+    /**
+     * 正常
+     */
+    public static final String NORMAL = "normal";
+
+    /**
+     * 取消
+     */
+    public static final String CANCEL = "cancel";
+
 }

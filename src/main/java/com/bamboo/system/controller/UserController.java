@@ -3,6 +3,7 @@ package com.bamboo.system.controller;
 import com.bamboo.annotation.WebApiController;
 import com.bamboo.base.ResponsePagingVo;
 import com.bamboo.base.ResponseVo;
+import com.bamboo.constant.ApiResult;
 import com.bamboo.constant.SelfConstant;
 import com.bamboo.system.api.UserControllerApi;
 import com.bamboo.system.condition.SelfUserCondition;
@@ -32,18 +33,18 @@ public class UserController implements UserControllerApi {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getUserByName")
+    @GetMapping("/getUserByUserAccount")
     @Override
-    public ResponseVo<SelfUser> getUserByUserName(String userName) {
+    public ResponseVo<SelfUser> getUserByUserAccount(String userAccount) {
         ResponseVo resultVo = new ResponseVo();
         try {
-            if (StringUtils.isNotBlank(userName)) {
-                SelfUser user = this.userService.getUserByUserName(userName);
+            if (StringUtils.isNotBlank(userAccount)) {
+                SelfUser user = this.userService.getUserByUserAccount(userAccount);
                 resultVo.setResult(SelfConstant.SUCCESS);
                 resultVo.setData(user);
             } else {
                 resultVo.setResult(SelfConstant.FAIL);
-                resultVo.setMessage("用户名称不能为空");
+                resultVo.setMessage("用户账号不能为空");
             }
         } catch (Exception e) {
             resultVo.setResult(SelfConstant.FAIL);
@@ -76,7 +77,13 @@ public class UserController implements UserControllerApi {
     public ResponseVo insertUser(@RequestBody SelfUser user) {
         ResponseVo resultVo = new ResponseVo();
         try {
-
+            String resultMsg = this.userService.insertUser(user);
+            if (StringUtils.equals(SelfConstant.SUCCESS, resultMsg)) {
+                resultVo.setResult(ApiResult.SUCCESS);
+            } else {
+                resultVo.setMessage(resultMsg);
+                resultVo.setResult(ApiResult.FAILED);
+            }
         } catch (Exception e) {
             resultVo.setResult(SelfConstant.FAIL);
             resultVo.setMessage("添加失败");
@@ -89,7 +96,13 @@ public class UserController implements UserControllerApi {
     public ResponseVo updateUser(@RequestBody SelfUser user) {
         ResponseVo resultVo = new ResponseVo();
         try {
-
+            String resultMsg = this.userService.updateUser(user);
+            if (StringUtils.equals(SelfConstant.SUCCESS, resultMsg)) {
+                resultVo.setResult(ApiResult.SUCCESS);
+            } else {
+                resultVo.setMessage(resultMsg);
+                resultVo.setResult(ApiResult.FAILED);
+            }
         } catch (Exception e) {
             resultVo.setResult(SelfConstant.FAIL);
             resultVo.setMessage("修改失败");
@@ -99,10 +112,16 @@ public class UserController implements UserControllerApi {
 
     @PostMapping("/deleteUser")
     @Override
-    public ResponseVo deleteUser(Integer userId) {
+    public ResponseVo deleteUser(Long userId) {
         ResponseVo resultVo = new ResponseVo();
         try {
-
+            String resultMsg = this.userService.deleteUser(userId);
+            if (StringUtils.equals(SelfConstant.SUCCESS, resultMsg)) {
+                resultVo.setResult(ApiResult.SUCCESS);
+            } else {
+                resultVo.setMessage(resultMsg);
+                resultVo.setResult(ApiResult.FAILED);
+            }
         } catch (Exception e) {
             resultVo.setResult(SelfConstant.FAIL);
             resultVo.setMessage("删除失败");
