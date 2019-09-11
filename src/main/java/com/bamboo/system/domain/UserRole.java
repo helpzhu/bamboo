@@ -1,7 +1,6 @@
 package com.bamboo.system.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -11,14 +10,28 @@ import java.io.Serializable;
  * @date 2019/9/9 20:19
  * @since JDK1.8
  */
+@Entity
 @Table(name = "user_role")
 public class UserRole implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_role_id")
+    private Long userRoleId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @Column(name = "role_id", nullable = false)
     private Long roleId;
+
+    public Long getUserRoleId() {
+        return userRoleId;
+    }
+
+    public void setUserRoleId(Long userRoleId) {
+        this.userRoleId = userRoleId;
+    }
 
     public Long getUserId() {
         return userId;

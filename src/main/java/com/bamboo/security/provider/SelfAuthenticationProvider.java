@@ -1,6 +1,6 @@
 package com.bamboo.security.provider;
 
-import com.bamboo.security.SelfUserDetailsService;
+import com.bamboo.security.service.SelfUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

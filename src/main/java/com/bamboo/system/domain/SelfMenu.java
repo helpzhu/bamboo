@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @date 2019/9/9 20:07
  * @since JDK1.8
  */
+@Entity
 @Table(name = "self_menu")
 public class SelfMenu implements Serializable {
 

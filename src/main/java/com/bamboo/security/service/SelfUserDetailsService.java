@@ -1,6 +1,7 @@
 package com.bamboo.security.service;
 
 import com.bamboo.security.User.SelfSecurityUserVo;
+import com.bamboo.system.dao.PermissionRepository;
 import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.slf4j.Logger;
@@ -11,6 +12,10 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author bamboo
@@ -27,17 +32,35 @@ public class SelfUserDetailsService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PermissionRepository permissionRepository;
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
         SelfUser userVo = this.userService.getUserByUserAccount(userName);
-
         if (userVo == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
 
+        List<String> permissionList = this.permissionRepository.findAllPermissionByUserAccount(userVo.getUserAccount());
+        String permission = permissionList.stream().map(String::toString).collect(Collectors.joining(","));
+
         logger.info("userName:{}, encode password:{}", userName, userVo.getPassword());
-        return new SelfSecurityUserVo(userVo.getUserName(), userVo.getPassword(),
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        SelfSecurityUserVo selfSecurityUserVo = new SelfSecurityUserVo(userVo.getUserName(), userVo.getPassword(),
+                AuthorityUtils.commaSeparatedStringToAuthorityList(permission));
+        return selfSecurityUserVo;
+    }
+
+    public static void main(String[] args) {
+        List<String> permissionList = new ArrayList<>();
+
+        permissionList.add("/user/list");
+        permissionList.add("/user/list1");
+        permissionList.add("/user/list2");
+
+        String permission = permissionList.stream().map(String::toString).collect(Collectors.joining(","));
+
+        System.out.println(permission);
     }
 }

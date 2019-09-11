@@ -1,7 +1,6 @@
 package com.bamboo.system.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -11,14 +10,28 @@ import java.io.Serializable;
  * @date 2019/9/9 20:26
  * @since JDK1.8
  */
+@Entity
 @Table(name = "role_menu")
 public class RoleMenu implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "role_menu_id")
+    private Long roleMenuId;
 
     @Column(name = "role_id", nullable = false)
     private Long roleId;
 
     @Column(name = "menu_id", nullable = false)
     private Long menuId;
+
+    public Long getRoleMenuId() {
+        return roleMenuId;
+    }
+
+    public void setRoleMenuId(Long roleMenuId) {
+        this.roleMenuId = roleMenuId;
+    }
 
     public Long getRoleId() {
         return roleId;

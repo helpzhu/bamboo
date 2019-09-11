@@ -7,7 +7,6 @@ import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -87,10 +86,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<SelfUser> getUserPaging(SelfUserCondition condition) {
-
         // 封装查询条件
         Specification<SelfUser> specification = this.getSpecification(condition);
-
         return this.userRepository.findAll(specification, PageRequest.of(condition.getPageNum(), condition.getPageSize()));
     }
 
@@ -101,7 +98,6 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     private Specification<SelfUser> getSpecification(SelfUserCondition condition) {
-
         Specification<SelfUser> specification = new Specification<SelfUser>() {
             @Nullable
             @Override

@@ -15,7 +15,7 @@ import java.util.List;
  * @since JDK1.8
  */
 @Repository
-public interface UserRepository extends JpaRepository<SelfUser, Long>, JpaSpecificationExecutor<SelfUser>{
+public interface UserRepository extends JpaRepository<SelfUser, Long>, JpaSpecificationExecutor{
 
     List<SelfUser> getUsersByUserAccount(String userAccount);
 }

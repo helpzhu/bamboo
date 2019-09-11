@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,7 @@ public class UserController implements UserControllerApi {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasAuthority('/user/getUserByUserAccount')")
     @GetMapping("/getUserByUserAccount")
     @Override
     public ResponseVo<SelfUser> getUserByUserAccount(String userAccount) {

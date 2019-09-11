@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @date 2019/9/9 19:52
  * @since JDK1.8
  */
+@Entity
 @Table(name = "self_role")
 public class SelfRole implements Serializable {
 

@@ -15,7 +15,7 @@ import java.util.List;
  * @since JDK1.8
  */
 @Repository
-public interface RoleRepository extends JpaRepository<SelfRole, Long>, JpaSpecificationExecutor<SelfRole> {
+public interface RoleRepository extends JpaRepository<SelfRole, Long>, JpaSpecificationExecutor {
 
     List<SelfRole> findAllByRoleName(String roleName);
 }

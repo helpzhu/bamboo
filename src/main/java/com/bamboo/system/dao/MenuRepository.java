@@ -15,7 +15,7 @@ import java.util.List;
  * @since JDK1.8
  */
 @Repository
-public interface MenuRepository extends JpaRepository<SelfMenu, Long>, JpaSpecificationExecutor<SelfMenu> {
+public interface MenuRepository extends JpaRepository<SelfMenu, Long>, JpaSpecificationExecutor {
 
     List<SelfMenu> findAllByMenuUrl(String menuUrl);
 }

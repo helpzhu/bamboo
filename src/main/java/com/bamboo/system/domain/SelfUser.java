@@ -11,6 +11,7 @@ import java.util.Date;
  * @date 2019/9/4 14:54
  * @since JDK1.8
  */
+@Entity
 @Table(name = "user")
 public class SelfUser implements Serializable {
 
