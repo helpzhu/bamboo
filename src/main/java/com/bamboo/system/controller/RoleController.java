@@ -5,11 +5,11 @@ import com.bamboo.base.ResponsePagingVo;
 import com.bamboo.base.ResponseVo;
 import com.bamboo.constant.ApiResult;
 import com.bamboo.constant.SelfConstant;
-import com.bamboo.system.api.UserControllerApi;
-import com.bamboo.system.api.entity.SelfUserVo;
-import com.bamboo.system.condition.SelfUserCondition;
-import com.bamboo.system.domain.SelfUser;
-import com.bamboo.system.service.UserService;
+import com.bamboo.system.api.RoleControllerApi;
+import com.bamboo.system.api.entity.SelfRoleVo;
+import com.bamboo.system.condition.SelfRoleCondition;
+import com.bamboo.system.domain.SelfRole;
+import com.bamboo.system.service.RoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,48 +23,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author bamboo
  * @version 1.0
  * @desc
- * @date 2019/9/4 15:08
+ * @date 2019/9/11 16:29
  * @since JDK1.8
  */
 @WebApiController
-@RequestMapping("/user")
-public class UserController implements UserControllerApi {
+@RequestMapping("/role")
+public class RoleController implements RoleControllerApi {
 
     @Autowired
-    private UserService userService;
+    private RoleService roleService;
 
-    @GetMapping("/getUserByUserAccount")
+    @GetMapping("/getRolePaging")
     @Override
-    public ResponseVo<SelfUser> getUserByUserAccount(String userAccount) {
-        ResponseVo resultVo = new ResponseVo();
-        try {
-            if (StringUtils.isNotBlank(userAccount)) {
-                SelfUser user = this.userService.getUserByUserAccount(userAccount);
-                resultVo.setResult(SelfConstant.SUCCESS);
-                resultVo.setData(user);
-            } else {
-                resultVo.setResult(SelfConstant.FAIL);
-                resultVo.setMessage("用户账号不能为空");
-            }
-        } catch (Exception e) {
-            resultVo.setResult(SelfConstant.FAIL);
-            resultVo.setMessage("查询失败");
-        }
-        return resultVo;
-    }
-
-    @GetMapping("/getUserPaging")
-    @Override
-    public ResponsePagingVo getUserPaging(@RequestBody SelfUserCondition condition) {
+    public ResponsePagingVo getRolePaging(@RequestBody SelfRoleCondition condition) {
         ResponsePagingVo resultVo = new ResponsePagingVo();
         try {
-            Page<SelfUser> selfUserPage = this.userService.getUserPaging(condition);
-            resultVo.setTotalPages(selfUserPage.getTotalPages());
-            resultVo.setTotalRows(selfUserPage.getTotalElements());
-            resultVo.setPageNum(selfUserPage.getNumber());
-            resultVo.setPageSize(selfUserPage.getSize());
+            Page<SelfRole> rolePage = this.roleService.getRolePaging(condition);
+            resultVo.setTotalPages(rolePage.getTotalPages());
+            resultVo.setTotalRows(rolePage.getTotalElements());
+            resultVo.setPageNum(rolePage.getNumber());
+            resultVo.setPageSize(rolePage.getSize());
+            resultVo.setData(rolePage.getContent());
             resultVo.setResult(SelfConstant.SUCCESS);
-            resultVo.setData(selfUserPage.getContent());
         } catch (Exception e) {
             resultVo.setMessage("查询出错");
             resultVo.setResult(SelfConstant.FAIL);
@@ -72,14 +52,14 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
-    @PostMapping("/insertUser")
+    @PostMapping("/insertRole")
     @Override
-    public ResponseVo insertUser(@RequestBody SelfUserVo userVo) {
+    public ResponseVo insertRole(@RequestBody SelfRoleVo roleVo) {
         ResponseVo resultVo = new ResponseVo();
         try {
-            SelfUser user = new SelfUser();
-            BeanUtils.copyProperties(userVo, user);
-            String resultMsg = this.userService.insertUser(user);
+            SelfRole role = new SelfRole();
+            BeanUtils.copyProperties(roleVo, role);
+            String resultMsg = this.roleService.insertRole(role);
             if (StringUtils.equals(SelfConstant.SUCCESS, resultMsg)) {
                 resultVo.setResult(ApiResult.SUCCESS);
             } else {
@@ -93,14 +73,14 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
-    @PostMapping("/updateUser")
+    @PostMapping("/updateRole")
     @Override
-    public ResponseVo updateUser(@RequestBody SelfUserVo userVo) {
+    public ResponseVo updateRole(@RequestBody SelfRoleVo roleVo) {
         ResponseVo resultVo = new ResponseVo();
         try {
-            SelfUser user = new SelfUser();
-            BeanUtils.copyProperties(userVo, user);
-            String resultMsg = this.userService.updateUser(user);
+            SelfRole role = new SelfRole();
+            BeanUtils.copyProperties(roleVo, role);
+            String resultMsg = this.roleService.updateRole(role);
             if (StringUtils.equals(SelfConstant.SUCCESS, resultMsg)) {
                 resultVo.setResult(ApiResult.SUCCESS);
             } else {
@@ -114,12 +94,12 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
-    @PostMapping("/deleteUser")
+    @PostMapping("/deleteRole")
     @Override
-    public ResponseVo deleteUser(Long userId) {
+    public ResponseVo deleteRole(Long roleId) {
         ResponseVo resultVo = new ResponseVo();
         try {
-            String resultMsg = this.userService.deleteUser(userId);
+            String resultMsg = this.roleService.deleteRole(roleId);
             if (StringUtils.equals(SelfConstant.SUCCESS, resultMsg)) {
                 resultVo.setResult(ApiResult.SUCCESS);
             } else {

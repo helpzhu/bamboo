@@ -2,11 +2,10 @@ package com.bamboo.system.api;
 
 import com.bamboo.base.ResponsePagingVo;
 import com.bamboo.base.ResponseVo;
+import com.bamboo.system.api.entity.SelfUserVo;
 import com.bamboo.system.condition.SelfUserCondition;
 import com.bamboo.system.domain.SelfUser;
 import io.swagger.annotations.*;
-
-import java.util.List;
 
 import static com.bamboo.system.api.UserControllerApi.TAG_NAME;
 
@@ -35,10 +34,10 @@ public interface UserControllerApi {
     ResponsePagingVo getUserPaging(@ApiParam(value = "查询VO") SelfUserCondition condition);
 
     @ApiOperation(value = "添加用户信息", notes = "user", tags = TAG_NAME)
-    ResponseVo insertUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
+    ResponseVo insertUser(@ApiParam(value = "用户信息", required = true) SelfUserVo userVo);
 
     @ApiOperation(value = "修改用户信息", notes = "user", tags = TAG_NAME)
-    ResponseVo updateUser(@ApiParam(value = "用户信息", required = true) SelfUser user);
+    ResponseVo updateUser(@ApiParam(value = "用户信息", required = true) SelfUserVo userVo);
 
     @ApiOperation(value = "删除用户信息", notes = "user", tags = TAG_NAME)
     ResponseVo deleteUser(@ApiParam(value = "用户id", required = true) Long userId);

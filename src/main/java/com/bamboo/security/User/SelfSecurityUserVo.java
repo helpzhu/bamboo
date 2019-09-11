@@ -12,13 +12,13 @@ import java.util.Collection;
  * @date 2019/9/3 20:22
  * @since JDK1.8
  */
-public class SelfUserVo extends User {
+public class SelfSecurityUserVo extends User {
 
-    public SelfUserVo(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public SelfSecurityUserVo(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
 
-    public SelfUserVo(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public SelfSecurityUserVo(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 }

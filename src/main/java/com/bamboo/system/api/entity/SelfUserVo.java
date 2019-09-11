@@ -1,27 +1,32 @@
-package com.bamboo.system.condition;
+package com.bamboo.system.api.entity;
 
-import com.bamboo.base.RequestPagingVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * @author bamboo
  * @version 1.0
  * @desc
- * @date 2019/9/10 20:13
+ * @date 2019/9/4 14:54
  * @since JDK1.8
  */
-@ApiModel("用户查询VO")
-public class SelfUserCondition extends RequestPagingVo {
+@ApiModel("用户VO")
+public class SelfUserVo implements Serializable {
 
-    @ApiModelProperty("用户名")
+    @ApiModelProperty("用户id")
+    private Long userId;
+
+    @ApiModelProperty("用户名称")
     private String userName;
 
     @ApiModelProperty("用户账号")
     private String userAccount;
+
+    @ApiModelProperty("密码")
+    private String password;
 
     @ApiModelProperty("部门名称")
     private String deptName;
@@ -32,14 +37,13 @@ public class SelfUserCondition extends RequestPagingVo {
     @ApiModelProperty("邮箱")
     private String email;
 
-    @ApiModelProperty("状态 normal：正常  cancel：作废")
-    private String status;
+    public Long getUserId() {
+        return userId;
+    }
 
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("修改时间")
-    private Date modifyTime;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getUserName() {
         return userName;
@@ -55,6 +59,14 @@ public class SelfUserCondition extends RequestPagingVo {
 
     public void setUserAccount(String userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getDeptName() {
@@ -81,32 +93,8 @@ public class SelfUserCondition extends RequestPagingVo {
         this.email = email;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(SelfUserCondition.class);
+        return ToStringBuilder.reflectionToString(this);
     }
 }

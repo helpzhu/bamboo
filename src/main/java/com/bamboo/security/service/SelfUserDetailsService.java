@@ -1,6 +1,6 @@
-package com.bamboo.security;
+package com.bamboo.security.service;
 
-import com.bamboo.security.User.SelfUserVo;
+import com.bamboo.security.User.SelfSecurityUserVo;
 import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.slf4j.Logger;
@@ -30,14 +30,14 @@ public class SelfUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-        SelfUser userVo = this.userService.getUserByUserName(userName);
+        SelfUser userVo = this.userService.getUserByUserAccount(userName);
 
         if (userVo == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
 
         logger.info("userName:{}, encode password:{}", userName, userVo.getPassword());
-        return new SelfUserVo(userVo.getUserName(), userVo.getPassword(),
+        return new SelfSecurityUserVo(userVo.getUserName(), userVo.getPassword(),
                 AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
 }
