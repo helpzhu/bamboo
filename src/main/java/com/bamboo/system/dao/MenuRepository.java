@@ -18,4 +18,6 @@ import java.util.List;
 public interface MenuRepository extends JpaRepository<SelfMenu, Long>, JpaSpecificationExecutor {
 
     List<SelfMenu> findAllByMenuUrl(String menuUrl);
+
+    List<SelfMenu> findAllByTypeAndParentId(String type, Long parentId);
 }

@@ -36,4 +36,7 @@ public interface MenuControllerApi {
 
     @ApiOperation(value = "删除菜单信息", notes = "user", tags = TAG_NAME)
     ResponseVo deleteMenu(@ApiParam(value = "菜单id", required = true) Long menuId);
+
+    @ApiOperation(value = "获取所有菜单信息", notes = "user", tags = TAG_NAME)
+    ResponseVo getMenuTree();
 }

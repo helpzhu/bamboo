@@ -35,4 +35,9 @@ public class SelfConstant {
     public static final String MENU = "menu";
     public static final String BUTTON = "button";
 
+    /**
+     * 根菜单的父菜单id
+     */
+    public static final Long MENU_ROOT_ID = 0L;
+
 }

@@ -1,6 +1,8 @@
 package com.bamboo.system.service.impl;
 
 import com.bamboo.constant.SelfConstant;
+import com.bamboo.system.api.entity.MenuTreeVo;
+import com.bamboo.system.api.entity.SelfMenuVo;
 import com.bamboo.system.condition.SelfMenuCondition;
 import com.bamboo.system.dao.MenuRepository;
 import com.bamboo.system.domain.SelfMenu;
@@ -9,6 +11,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +25,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author bamboo
@@ -88,7 +93,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Page<SelfMenu> getMenuPaging(SelfMenuCondition condition) {
+    public Page<SelfMenu> getMenuPaging(SelfMenuCondition condition) throws Exception {
         Specification<SelfMenu> specification = this.getSpecification(condition);
         return this.menuRepository.findAll(specification, PageRequest.of(condition.getPageNum(), condition.getPageSize()));
     }
@@ -117,5 +122,41 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<SelfMenu> findAll() {
         return this.menuRepository.findAll();
+    }
+
+    private List<SelfMenu> findAllByTypeAndParentId(String type, Long parentId) {
+        return this.menuRepository.findAllByTypeAndParentId(type, parentId);
+    }
+
+    @Override
+    public Map<Long, MenuTreeVo> getMenuTree() throws Exception {
+
+        Map<Long, MenuTreeVo> map = new HashMap<>();
+
+        try {
+            List<SelfMenu> rootMenuList = this.findAllByTypeAndParentId(SelfConstant.MENU, SelfConstant.MENU_ROOT_ID);
+
+            for (SelfMenu selfMenu : rootMenuList) {
+
+                List<SelfMenu> selfMenuList = this.findAllByTypeAndParentId(SelfConstant.MENU, selfMenu.getMenuId());
+
+                List<SelfMenuVo> selfMenuVoList = new ArrayList<>();
+                for (SelfMenu menu : selfMenuList) {
+                    SelfMenuVo selfMenuVo = new SelfMenuVo();
+                    BeanUtils.copyProperties(menu, selfMenuVo);
+                    selfMenuVoList.add(selfMenuVo);
+                }
+
+                MenuTreeVo menuTreeVo = new MenuTreeVo();
+                BeanUtils.copyProperties(selfMenu, menuTreeVo);
+                menuTreeVo.setSelfMenuVoList(selfMenuVoList);
+
+                map.put(menuTreeVo.getMenuId(), menuTreeVo);
+            }
+        } catch (Exception e) {
+            logger.error("查询菜单树信息出错", e);
+            throw e;
+        }
+        return map;
     }
 }

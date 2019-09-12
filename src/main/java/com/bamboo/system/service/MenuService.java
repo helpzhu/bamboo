@@ -1,10 +1,12 @@
 package com.bamboo.system.service;
 
+import com.bamboo.system.api.entity.MenuTreeVo;
 import com.bamboo.system.condition.SelfMenuCondition;
 import com.bamboo.system.domain.SelfMenu;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author XuZhu
@@ -45,11 +47,17 @@ public interface MenuService {
      * @param condition
      * @return
      */
-    Page<SelfMenu> getMenuPaging(SelfMenuCondition condition);
+    Page<SelfMenu> getMenuPaging(SelfMenuCondition condition) throws Exception;
 
     /**
      * 查询所有菜单信息
      * @return
      */
     List<SelfMenu> findAll();
+
+    /**
+     * 获取菜单树
+     * @return
+     */
+    Map<Long, MenuTreeVo> getMenuTree() throws Exception;
 }

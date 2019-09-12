@@ -6,6 +6,7 @@ import com.bamboo.base.ResponseVo;
 import com.bamboo.constant.ApiResult;
 import com.bamboo.constant.SelfConstant;
 import com.bamboo.system.api.MenuControllerApi;
+import com.bamboo.system.api.entity.MenuTreeVo;
 import com.bamboo.system.api.entity.SelfMenuVo;
 import com.bamboo.system.condition.SelfMenuCondition;
 import com.bamboo.system.domain.SelfMenu;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Map;
 
 /**
  * @author bamboo
@@ -32,6 +35,16 @@ public class MenuController implements MenuControllerApi {
 
     @Autowired
     private MenuService menuService;
+
+    @Override
+    public ResponseVo getMenuTree() {
+        try {
+            Map<Long, MenuTreeVo> map = this.menuService.getMenuTree();
+            return ResponseVo.success(map);
+        } catch (Exception e) {
+            return ResponseVo.failed("查询菜单树数据出错");
+        }
+    }
 
     @PostMapping("/getMenuPaging")
     @Override

@@ -88,13 +88,13 @@ public class PermissionInitializing {
 
     private void insertMenu() throws Exception {
         try {
-            SelfMenu selfMenu = new SelfMenu("用户管理", "/user", null, 0L, SelfConstant.MENU);
+            SelfMenu selfMenu = new SelfMenu("用户管理", "/user", null, SelfConstant.MENU_ROOT_ID, SelfConstant.MENU);
             this.menuService.insertMenu(selfMenu);
 
-            SelfMenu selfMenu1 = new SelfMenu("角色管理", "/role", null, 0L, SelfConstant.MENU);
+            SelfMenu selfMenu1 = new SelfMenu("角色管理", "/role", null, SelfConstant.MENU_ROOT_ID, SelfConstant.MENU);
             this.menuService.insertMenu(selfMenu1);
 
-            SelfMenu selfMenu2 = new SelfMenu("菜单管理", "/menu", null, 0L, SelfConstant.MENU);
+            SelfMenu selfMenu2 = new SelfMenu("菜单管理", "/menu", null, SelfConstant.MENU_ROOT_ID, SelfConstant.MENU);
             this.menuService.insertMenu(selfMenu2);
         } catch (Exception e) {
             logger.error("初始化添加菜单信息出错", e);
