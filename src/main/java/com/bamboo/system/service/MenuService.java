@@ -4,6 +4,8 @@ import com.bamboo.system.condition.SelfMenuCondition;
 import com.bamboo.system.domain.SelfMenu;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @author XuZhu
  * @version 1.0
@@ -19,7 +21,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    String insertMenu(SelfMenu menu);
+    String insertMenu(SelfMenu menu) throws Exception;
 
     /**
      * 修改菜单
@@ -27,7 +29,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    String updateMenu(SelfMenu menu);
+    String updateMenu(SelfMenu menu) throws Exception;
 
     /**
      * 删除菜单
@@ -35,7 +37,7 @@ public interface MenuService {
      * @param menuId
      * @return
      */
-    String deleteMenu(Long menuId);
+    String deleteMenu(Long menuId) throws Exception;
 
     /**
      * 分页查询菜单
@@ -44,4 +46,10 @@ public interface MenuService {
      * @return
      */
     Page<SelfMenu> getMenuPaging(SelfMenuCondition condition);
+
+    /**
+     * 查询所有菜单信息
+     * @return
+     */
+    List<SelfMenu> findAll();
 }

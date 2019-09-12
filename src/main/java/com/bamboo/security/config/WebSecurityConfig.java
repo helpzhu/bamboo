@@ -1,4 +1,4 @@
-package com.bamboo.config;
+package com.bamboo.security.config;
 
 import com.bamboo.security.handler.SelfLoginFailHandler;
 import com.bamboo.security.handler.SelfLoginSuccessHandler;
@@ -122,5 +122,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    /**
+     * 初始化权限相关数据
+     * @return
+     */
+    @Bean
+    public PermissionInitializing permissionInitializing() {
+        return new PermissionInitializing();
     }
 }

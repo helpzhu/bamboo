@@ -37,6 +37,17 @@ public class SelfMenu implements Serializable {
     @Column(name = "type", nullable = false, length = 20)
     private String type;
 
+    public SelfMenu() {
+    }
+
+    public SelfMenu(String menuName, String menuUrl, String menuIcon, Long parentId, String type) {
+        this.menuName = menuName;
+        this.menuUrl = menuUrl;
+        this.menuIcon = menuIcon;
+        this.parentId = parentId;
+        this.type = type;
+    }
+
     public Long getMenuId() {
         return menuId;
     }

@@ -4,6 +4,8 @@ import com.bamboo.system.condition.SelfRoleCondition;
 import com.bamboo.system.domain.SelfRole;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @author XuZhu
  * @version 1.0
@@ -19,7 +21,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-    String insertRole(SelfRole role);
+    String insertRole(SelfRole role) throws Exception;
 
     /**
      * 修改角色
@@ -27,7 +29,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-    String updateRole(SelfRole role);
+    String updateRole(SelfRole role) throws Exception;
 
     /**
      * 删除角色
@@ -35,7 +37,7 @@ public interface RoleService {
      * @param roleId
      * @return
      */
-    String deleteRole(Long roleId);
+    String deleteRole(Long roleId) throws Exception;
 
     /**
      * 分页查询角色
@@ -44,4 +46,10 @@ public interface RoleService {
      * @return
      */
     Page<SelfRole> getRolePaging(SelfRoleCondition condition);
+
+    /**
+     * 查询所有角色信息
+     * @return
+     */
+    List<SelfRole> findAll();
 }

@@ -25,6 +25,14 @@ public class RoleMenu implements Serializable {
     @Column(name = "menu_id", nullable = false)
     private Long menuId;
 
+    public RoleMenu() {
+    }
+
+    public RoleMenu(Long roleId, Long menuId) {
+        this.roleId = roleId;
+        this.menuId = menuId;
+    }
+
     public Long getRoleMenuId() {
         return roleMenuId;
     }

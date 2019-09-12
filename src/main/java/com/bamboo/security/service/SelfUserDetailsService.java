@@ -46,7 +46,7 @@ public class SelfUserDetailsService implements UserDetailsService {
         List<String> permissionList = this.permissionRepository.findAllPermissionByUserAccount(userVo.getUserAccount());
         String permission = permissionList.stream().map(String::toString).collect(Collectors.joining(","));
 
-        logger.info("userName:{}, encode password:{}", userName, userVo.getPassword());
+        logger.info("当前登录用户：{}，所拥有权限：{}", userVo.getUserAccount(), permission);
         SelfSecurityUserVo selfSecurityUserVo = new SelfSecurityUserVo(userVo.getUserName(), userVo.getPassword(),
                 AuthorityUtils.commaSeparatedStringToAuthorityList(permission));
         return selfSecurityUserVo;

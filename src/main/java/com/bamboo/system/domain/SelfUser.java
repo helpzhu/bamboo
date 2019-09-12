@@ -56,6 +56,23 @@ public class SelfUser implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
+    public SelfUser() {
+    }
+
+    public SelfUser(String uuId, String userName, String userAccount, String password, Long deptId, String deptName, String phoneNumber, String email, String status, Date createTime, Date modifyTime) {
+        this.uuId = uuId;
+        this.userName = userName;
+        this.userAccount = userAccount;
+        this.password = password;
+        this.deptId = deptId;
+        this.deptName = deptName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.status = status;
+        this.createTime = createTime;
+        this.modifyTime = modifyTime;
+    }
+
     public Long getUserId() {
         return userId;
     }

@@ -20,21 +20,21 @@ public interface UserService {
      * @param user
      * @return
      */
-    String insertUser(SelfUser user);
+    String insertUser(SelfUser user) throws Exception;
 
     /**
      * 修改用户
      * @param user
      * @return
      */
-    String updateUser(SelfUser user);
+    String updateUser(SelfUser user) throws Exception;
 
     /**
      * 删除用户
      * @param userId
      * @return
      */
-    String deleteUser(Long userId);
+    String deleteUser(Long userId) throws Exception;
 
     /**
      * 根据用户账号查询用户信息
@@ -47,7 +47,7 @@ public interface UserService {
      * 查询所有用户信息
      * @return
      */
-    List<SelfUser> getAllUser();
+    List<SelfUser> findAll();
 
     /**
      * 分页查询用户信息

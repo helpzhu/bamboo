@@ -7,12 +7,15 @@ import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -33,41 +36,61 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public String insertUser(SelfUser user) {
-        SelfUser selfUser = this.getUserByUserAccount(user.getUserAccount());
-        if (selfUser != null) {
-            return "用户账号：" + user.getUserAccount() + "已经存在，不能重复添加";
+    public String insertUser(SelfUser user) throws Exception {
+        try {
+            SelfUser selfUser = this.getUserByUserAccount(user.getUserAccount());
+            if (selfUser != null) {
+                return "用户账号：" + user.getUserAccount() + "已经存在，不能重复添加";
+            }
+            user.setUuId(UUID.randomUUID().toString());
+            user.setStatus(SelfConstant.NORMAL);
+            user.setCreateTime(new Date());
+            this.userRepository.save(user);
+            return SelfConstant.SUCCESS;
+        } catch (Exception e) {
+            logger.error("添加用户出错", e);
+            throw e;
         }
-        user.setUuId(UUID.randomUUID().toString());
-        user.setStatus(SelfConstant.NORMAL);
-        user.setCreateTime(new Date());
-        this.userRepository.save(user);
-        return SelfConstant.SUCCESS;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public String updateUser(SelfUser user) {
-        SelfUser selfUser = this.userRepository.getOne(user.getUserId());
-        if (selfUser == null) {
-            return "用户账号：" + user.getUserAccount() + "不存在，无法修改";
+    public String updateUser(SelfUser user) throws Exception {
+        try {
+            SelfUser selfUser = this.userRepository.getOne(user.getUserId());
+            if (selfUser == null) {
+                return "用户账号：" + user.getUserAccount() + "不存在，无法修改";
+            }
+            user.setModifyTime(new Date());
+            this.userRepository.save(user);
+            return SelfConstant.SUCCESS;
+        } catch (Exception e) {
+            logger.error("修改用户出错", e);
+            throw e;
         }
-        user.setModifyTime(new Date());
-        this.userRepository.save(user);
-        return SelfConstant.SUCCESS;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public String deleteUser(Long userId) {
-        SelfUser selfUser = this.userRepository.getOne(userId);
-        if (selfUser == null) {
-            return "用户账号不存在，请重新操作";
+    public String deleteUser(Long userId) throws Exception {
+        try {
+            SelfUser selfUser = this.userRepository.getOne(userId);
+            if (selfUser == null) {
+                return "用户账号不存在，请重新操作";
+            }
+            this.userRepository.deleteById(userId);
+            return SelfConstant.SUCCESS;
+        } catch (Exception e) {
+            logger.error("删除用户出错", e);
+            throw e;
         }
-        this.userRepository.deleteById(userId);
-        return SelfConstant.SUCCESS;
     }
 
     @Override
@@ -80,7 +103,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SelfUser> getAllUser() {
+    public List<SelfUser> findAll() {
         return this.userRepository.findAll();
     }
 

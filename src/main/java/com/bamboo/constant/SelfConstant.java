@@ -29,4 +29,10 @@ public class SelfConstant {
      */
     public static final String CANCEL = "cancel";
 
+    /**
+     * menu:菜单  button:按钮
+     */
+    public static final String MENU = "menu";
+    public static final String BUTTON = "button";
+
 }

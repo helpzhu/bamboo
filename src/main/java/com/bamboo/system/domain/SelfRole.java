@@ -25,6 +25,14 @@ public class SelfRole implements Serializable {
     @Column(name = "description")
     private String description;
 
+    public SelfRole() {
+    }
+
+    public SelfRole(String roleName, String description) {
+        this.roleName = roleName;
+        this.description = description;
+    }
+
     public Long getRoleId() {
         return roleId;
     }
