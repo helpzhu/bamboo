@@ -26,6 +26,14 @@ public interface MenuService {
     String insertMenu(SelfMenu menu) throws Exception;
 
     /**
+     * 批量添加菜单
+     * @param selfMenuList
+     * @return
+     * @throws Exception
+     */
+    String insertMenuBatch(List<SelfMenu> selfMenuList) throws Exception;
+
+    /**
      * 修改菜单
      *
      * @param menu

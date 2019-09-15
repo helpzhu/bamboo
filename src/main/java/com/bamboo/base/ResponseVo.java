@@ -30,7 +30,14 @@ public class ResponseVo<T> {
         return responseVo;
     }
 
-    public static <T> ResponseVo failed(String message) {
+    public static ResponseVo success(String message) {
+        ResponseVo responseVo = new ResponseVo();
+        responseVo.setResult(ApiResult.SUCCESS);
+        responseVo.setMessage(message);
+        return responseVo;
+    }
+
+    public static ResponseVo failed(String message) {
         ResponseVo responseVo = new ResponseVo();
         responseVo.setResult(ApiResult.FAILED);
         responseVo.setMessage(message);

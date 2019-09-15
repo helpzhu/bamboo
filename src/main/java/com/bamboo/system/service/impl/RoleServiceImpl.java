@@ -90,7 +90,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Page<SelfRole> getRolePaging(SelfRoleCondition condition) {
         Specification specification = this.getSpecification(condition);
-        return this.roleRepository.findAll(specification, PageRequest.of(condition.getPageNum(), condition.getPageSize()));
+        return this.roleRepository.findAll(specification, PageRequest.of(condition.getPageNum() - 1, condition.getPageSize()));
     }
 
     private Specification<SelfRole> getSpecification(SelfRoleCondition condition) {

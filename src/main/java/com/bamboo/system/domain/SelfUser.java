@@ -12,7 +12,7 @@ import java.util.Date;
  * @since JDK1.8
  */
 @Entity
-@Table(name = "user")
+@Table(name = "self_user")
 public class SelfUser implements Serializable {
 
     @Id

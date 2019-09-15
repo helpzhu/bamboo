@@ -11,7 +11,7 @@ import static com.bamboo.system.api.LoginControllerApi.TAG_NAME;
  * @date 2019-09-07 20:18
  * @since JDK1.8
  */
-@Api(value = "登陆登出相关接口", tags = TAG_NAME)
+@Api(tags = TAG_NAME, description = "登陆登出相关接口")
 @ApiResponses({
         @ApiResponse(code = 200, message = "请求成功"),
         @ApiResponse(code = 400, message = "请求参数错误"),

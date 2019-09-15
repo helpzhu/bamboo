@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 
 /**
  * @author bamboo
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @date 2019-09-08 08:52
  * @since JDK1.8
  */
-@Component
+//@Component
 public class SelfAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired

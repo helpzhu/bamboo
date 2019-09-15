@@ -15,10 +15,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @author bamboo
@@ -34,7 +37,31 @@ public class UserController implements UserControllerApi {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasAuthority('/user/getUserByUserAccount')")
+    @GetMapping("/getCurrentUserInfo")
+    @Override
+    public ResponseVo getCurrentUserInfo() {
+        try {
+            return ResponseVo.success(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        } catch (Exception e) {
+            return ResponseVo.failed("获取当前登陆用户信息出错");
+        }
+    }
+
+    @GetMapping("/getAllUsers")
+    @Override
+    public ResponseVo<SelfUser> getAllUsers() {
+        ResponseVo resultVo = new ResponseVo();
+        try {
+            List<SelfUser> user = this.userService.findAll();
+            resultVo.setResult(SelfConstant.SUCCESS);
+            resultVo.setData(user);
+        } catch (Exception e) {
+            resultVo.setResult(SelfConstant.FAIL);
+            resultVo.setMessage("查询失败");
+        }
+        return resultVo;
+    }
+
     @GetMapping("/getUserByUserAccount")
     @Override
     public ResponseVo<SelfUser> getUserByUserAccount(String userAccount) {
@@ -55,7 +82,8 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
-    @GetMapping("/getUserPaging")
+    @PreAuthorize("hasAuthority('/user/getUserPaging')")
+    @PostMapping("/getUserPaging")
     @Override
     public ResponsePagingVo getUserPaging(@RequestBody SelfUserCondition condition) {
         ResponsePagingVo resultVo = new ResponsePagingVo();
@@ -74,6 +102,7 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/user/insertUser')")
     @PostMapping("/insertUser")
     @Override
     public ResponseVo insertUser(@RequestBody SelfUserVo userVo) {
@@ -95,6 +124,7 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/user/updateUser')")
     @PostMapping("/updateUser")
     @Override
     public ResponseVo updateUser(@RequestBody SelfUserVo userVo) {
@@ -116,6 +146,7 @@ public class UserController implements UserControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/user/deleteUser')")
     @PostMapping("/deleteUser")
     @Override
     public ResponseVo deleteUser(Long userId) {

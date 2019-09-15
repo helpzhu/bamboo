@@ -60,6 +60,19 @@ public class MenuServiceImpl implements MenuService {
         }
     }
 
+    @Override
+    public String insertMenuBatch(List<SelfMenu> selfMenuList) throws Exception {
+        try {
+            for (SelfMenu selfMenu : selfMenuList) {
+                this.insertMenu(selfMenu);
+            }
+            return SelfConstant.SUCCESS;
+        } catch (Exception e) {
+            logger.error("批量添加菜单出错", e);
+            throw e;
+        }
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String updateMenu(SelfMenu menu) throws Exception {
@@ -95,7 +108,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Page<SelfMenu> getMenuPaging(SelfMenuCondition condition) throws Exception {
         Specification<SelfMenu> specification = this.getSpecification(condition);
-        return this.menuRepository.findAll(specification, PageRequest.of(condition.getPageNum(), condition.getPageSize()));
+        return this.menuRepository.findAll(specification, PageRequest.of(condition.getPageNum() - 1, condition.getPageSize()));
     }
 
     private Specification<SelfMenu> getSpecification(SelfMenuCondition condition) {

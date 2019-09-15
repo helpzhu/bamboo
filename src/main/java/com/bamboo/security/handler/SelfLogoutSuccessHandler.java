@@ -1,5 +1,6 @@
 package com.bamboo.security.handler;
 
+import com.bamboo.base.ResponseVo;
 import com.bamboo.utils.JsonUtil;
 import com.bamboo.utils.ResponseUtil;
 import org.springframework.http.HttpStatus;
@@ -10,8 +11,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author bamboo
@@ -25,9 +24,6 @@ public class SelfLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", 200);
-        map.put("result", "注销成功");
-        ResponseUtil.writer(response, JsonUtil.toJson(map), HttpStatus.OK.value());
+        ResponseUtil.writer(response, JsonUtil.toJson(ResponseVo.success("注销成功")), HttpStatus.OK.value());
     }
 }

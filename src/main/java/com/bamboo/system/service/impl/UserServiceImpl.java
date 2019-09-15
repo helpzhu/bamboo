@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
     public Page<SelfUser> getUserPaging(SelfUserCondition condition) {
         // 封装查询条件
         Specification<SelfUser> specification = this.getSpecification(condition);
-        return this.userRepository.findAll(specification, PageRequest.of(condition.getPageNum(), condition.getPageSize()));
+        return this.userRepository.findAll(specification, PageRequest.of(condition.getPageNum() - 1, condition.getPageSize()));
     }
 
     /**
@@ -146,12 +146,12 @@ public class UserServiceImpl implements UserService {
                 if (StringUtils.isNotBlank(condition.getStatus())) {
                     predicateList.add(criteriaBuilder.equal(root.get("status"), condition.getStatus()));
                 }
-                if (null != condition.getCreateTime()) {
+                /*if (null != condition.getCreateTime()) {
                     predicateList.add(criteriaBuilder.equal(root.get("createTime"), condition.getCreateTime()));
                 }
                 if (null != condition.getModifyTime()) {
                     predicateList.add(criteriaBuilder.equal(root.get("modifyTime"), condition.getModifyTime()));
-                }
+                }*/
 
                 return criteriaBuilder.and(predicateList.toArray(new Predicate[predicateList.size()]));
             }

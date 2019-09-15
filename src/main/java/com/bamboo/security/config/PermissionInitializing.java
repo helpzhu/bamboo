@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -88,14 +89,42 @@ public class PermissionInitializing {
 
     private void insertMenu() throws Exception {
         try {
-            SelfMenu selfMenu = new SelfMenu("用户管理", "/user", null, SelfConstant.MENU_ROOT_ID, SelfConstant.MENU);
-            this.menuService.insertMenu(selfMenu);
 
-            SelfMenu selfMenu1 = new SelfMenu("角色管理", "/role", null, SelfConstant.MENU_ROOT_ID, SelfConstant.MENU);
-            this.menuService.insertMenu(selfMenu1);
+            SelfMenu rootMenu = new SelfMenu("系统管理", "", null, SelfConstant.MENU_ROOT_ID, SelfConstant.MENU);
+            this.menuService.insertMenu(rootMenu);
 
-            SelfMenu selfMenu2 = new SelfMenu("菜单管理", "/menu", null, SelfConstant.MENU_ROOT_ID, SelfConstant.MENU);
-            this.menuService.insertMenu(selfMenu2);
+            SelfMenu menu = this.menuService.findAll().get(0);
+
+            List<SelfMenu> selfMenuList = new ArrayList<>();
+
+            SelfMenu userMenu1 = new SelfMenu("用户管理", "/user/getUserPaging", null, menu.getMenuId(), SelfConstant.MENU);
+            SelfMenu userMenu2 = new SelfMenu("新增用户", "/user/insertUser", null, menu.getMenuId(), SelfConstant.BUTTON);
+            SelfMenu userMenu3 = new SelfMenu("编辑用户", "/user/updateUser", null, menu.getMenuId(), SelfConstant.BUTTON);
+            SelfMenu userMenu4 = new SelfMenu("删除用户", "/user/deleteUser", null, menu.getMenuId(), SelfConstant.BUTTON);
+            selfMenuList.add(userMenu1);
+            selfMenuList.add(userMenu2);
+            selfMenuList.add(userMenu3);
+            selfMenuList.add(userMenu4);
+
+            SelfMenu roleMenu1 = new SelfMenu("角色管理", "/role/getRolePaging", null, menu.getMenuId(), SelfConstant.MENU);
+            SelfMenu roleMenu2 = new SelfMenu("新增角色", "/role/insertRole", null, menu.getMenuId(), SelfConstant.BUTTON);
+            SelfMenu roleMenu3 = new SelfMenu("编辑角色", "/role/updateRole", null, menu.getMenuId(), SelfConstant.BUTTON);
+            SelfMenu roleMenu4 = new SelfMenu("删除角色", "/role/deleteRole", null, menu.getMenuId(), SelfConstant.BUTTON);
+            selfMenuList.add(roleMenu1);
+            selfMenuList.add(roleMenu2);
+            selfMenuList.add(roleMenu3);
+            selfMenuList.add(roleMenu4);
+
+            SelfMenu menu1 = new SelfMenu("菜单管理", "/menu/getMenuPaging", null, menu.getMenuId(), SelfConstant.MENU);
+            SelfMenu menu2 = new SelfMenu("新增菜单", "/menu/insertMenu", null, menu.getMenuId(), SelfConstant.BUTTON);
+            SelfMenu menu3 = new SelfMenu("编辑菜单", "/menu/updateMenu", null, menu.getMenuId(), SelfConstant.BUTTON);
+            SelfMenu menu4 = new SelfMenu("删除菜单", "/menu/deleteMenu", null, menu.getMenuId(), SelfConstant.BUTTON);
+            selfMenuList.add(menu1);
+            selfMenuList.add(menu2);
+            selfMenuList.add(menu3);
+            selfMenuList.add(menu4);
+
+            this.menuService.insertMenuBatch(selfMenuList);
         } catch (Exception e) {
             logger.error("初始化添加菜单信息出错", e);
             throw e;
@@ -142,7 +171,7 @@ public class PermissionInitializing {
                         logger.error("添加用户与角色关联信息出错", e);
                     }
                     for (SelfMenu selfMenu : selfMenuList) {
-                        if (!StringUtils.equals(selfMenu.getMenuName(), "用户管理")) {
+                        if (!StringUtils.contains(selfMenu.getMenuName(), "用户")) {
                             continue;
                         }
                         RoleMenu roleMenu = new RoleMenu(selfRole.getRoleId(), selfMenu.getMenuId());

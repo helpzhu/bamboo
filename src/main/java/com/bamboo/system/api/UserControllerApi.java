@@ -16,7 +16,7 @@ import static com.bamboo.system.api.UserControllerApi.TAG_NAME;
  * @date 2019/9/5 9:41
  * @since JDK1.8
  */
-@Api(value = "用户相关接口", tags = TAG_NAME)
+@Api(description = "用户相关接口", tags = TAG_NAME)
 @ApiResponses({
         @ApiResponse(code = 200, message = "请求成功"),
         @ApiResponse(code = 400, message = "请求参数错误"),
@@ -27,8 +27,17 @@ public interface UserControllerApi {
 
     String TAG_NAME = "user";
 
+    @ApiOperation(value = "获取所有用户信息", tags = TAG_NAME)
+    ResponseVo<SelfUser> getAllUsers();
+
     @ApiOperation(value = "根据用户账号获取用户信息用户信息", tags = TAG_NAME)
-    ResponseVo<SelfUser> getUserByUserAccount(@ApiParam(value = "用户账号", required = true) String userAccount);
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userAccount", value = "用户账号", dataType = "String", required = true)
+    })
+    ResponseVo<SelfUser> getUserByUserAccount(String userAccount);
+
+    @ApiOperation(value = "获取当前登陆用户信息", tags = TAG_NAME)
+    ResponseVo getCurrentUserInfo();
 
     @ApiOperation(value = "获取所有用户信息", notes = "user", tags = TAG_NAME)
     ResponsePagingVo getUserPaging(@ApiParam(value = "查询VO") SelfUserCondition condition);

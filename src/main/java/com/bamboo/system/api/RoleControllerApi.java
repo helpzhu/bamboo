@@ -15,7 +15,7 @@ import static com.bamboo.system.api.RoleControllerApi.TAG_NAME;
  * @date 2019/9/11 16:25
  * @since JDK1.8
  */
-@Api(value = "角色相关接口", tags = TAG_NAME)
+@Api(description = "角色相关接口", tags = TAG_NAME)
 @ApiResponses({
         @ApiResponse(code = 200, message = "请求成功"),
         @ApiResponse(code = 400, message = "请求参数错误"),

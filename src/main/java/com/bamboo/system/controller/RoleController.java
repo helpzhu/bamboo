@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,8 @@ public class RoleController implements RoleControllerApi {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/getRolePaging")
+    @PreAuthorize("hasAuthority('/role/getRolePaging')")
+    @PostMapping("/getRolePaging")
     @Override
     public ResponsePagingVo getRolePaging(@RequestBody SelfRoleCondition condition) {
         ResponsePagingVo resultVo = new ResponsePagingVo();
@@ -52,6 +54,7 @@ public class RoleController implements RoleControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/role/insertRole')")
     @PostMapping("/insertRole")
     @Override
     public ResponseVo insertRole(@RequestBody SelfRoleVo roleVo) {
@@ -73,6 +76,7 @@ public class RoleController implements RoleControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/role/updateRole')")
     @PostMapping("/updateRole")
     @Override
     public ResponseVo updateRole(@RequestBody SelfRoleVo roleVo) {
@@ -94,6 +98,7 @@ public class RoleController implements RoleControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/role/deleteRole')")
     @PostMapping("/deleteRole")
     @Override
     public ResponseVo deleteRole(Long roleId) {

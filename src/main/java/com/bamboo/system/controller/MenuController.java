@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,7 @@ public class MenuController implements MenuControllerApi {
     @Autowired
     private MenuService menuService;
 
+    @GetMapping("/getMenuTree")
     @Override
     public ResponseVo getMenuTree() {
         try {
@@ -46,6 +48,7 @@ public class MenuController implements MenuControllerApi {
         }
     }
 
+    @PreAuthorize(("hasAuthority('/menu/getMenuPaging')"))
     @PostMapping("/getMenuPaging")
     @Override
     public ResponsePagingVo getMenuPaging(@RequestBody SelfMenuCondition condition) {
@@ -65,6 +68,7 @@ public class MenuController implements MenuControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/menu/insertMenu')")
     @PostMapping("/insertMenu")
     @Override
     public ResponseVo insertMenu(@RequestBody SelfMenuVo menuVo) {
@@ -86,6 +90,7 @@ public class MenuController implements MenuControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/menu/updateMenu')")
     @PostMapping("/updateMenu")
     @Override
     public ResponseVo updateMenu(@RequestBody SelfMenuVo menuVo) {
@@ -107,6 +112,7 @@ public class MenuController implements MenuControllerApi {
         return resultVo;
     }
 
+    @PreAuthorize("hasAuthority('/menu/deleteMenu')")
     @PostMapping("/deleteMenu")
     @Override
     public ResponseVo deleteMenu(Long menuId) {

@@ -1,5 +1,6 @@
 package com.bamboo.system.dao;
 
+import com.bamboo.system.domain.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,5 @@ import org.springframework.stereotype.Repository;
  * @since JDK1.8
  */
 @Repository
-public interface UserRoleRepository extends JpaRepository{
+public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
 }
