@@ -24,5 +24,5 @@ public interface PermissionRepository extends JpaRepository<SelfMenu,  Long> {
             "left join user_role as ur on sr.role_id = ur.role_id " +
             "left join self_user as su on ur.user_id = su.user_id " +
             "where su.user_account = :userAccount and sm.menu_url <> ''", nativeQuery = true)
-    List<String> findAllPermissionByUserAccount(String userAccount);
+    List<String> findAllPermissionByUserAccount(@Param("userAccount") String userAccount);
 }

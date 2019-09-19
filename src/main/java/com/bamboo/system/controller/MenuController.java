@@ -42,7 +42,7 @@ public class MenuController implements MenuControllerApi {
     public ResponseVo getMenuTree() {
         try {
             Map<Long, MenuTreeVo> map = this.menuService.getMenuTree();
-            return ResponseVo.success(map);
+            return ResponseVo.success(map.values());
         } catch (Exception e) {
             return ResponseVo.failed("查询菜单树数据出错");
         }
