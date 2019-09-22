@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,11 +57,17 @@ public class MenuController implements MenuControllerApi {
         ResponsePagingVo resultVo = new ResponsePagingVo();
         try {
             Page<SelfMenu> menuPage = this.menuService.getMenuPaging(condition);
+            List<SelfMenuVo> selfMenuVoList = new ArrayList<>();
+            for (SelfMenu selfMenu : menuPage.getContent()) {
+                SelfMenuVo selfMenuVo = new SelfMenuVo();
+                BeanUtils.copyProperties(selfMenu, selfMenuVo);
+                selfMenuVoList.add(selfMenuVo);
+            }
             resultVo.setTotalPages(menuPage.getTotalPages());
             resultVo.setTotalRows(menuPage.getTotalElements());
-            resultVo.setPageNum(menuPage.getNumber());
+            resultVo.setPageNum(menuPage.getNumber() + 1);
             resultVo.setPageSize(menuPage.getSize());
-            resultVo.setData(menuPage.getContent());
+            resultVo.setData(selfMenuVoList);
             resultVo.setResult(SelfConstant.SUCCESS);
         } catch (Exception e) {
             resultVo.setMessage("查询出错");
