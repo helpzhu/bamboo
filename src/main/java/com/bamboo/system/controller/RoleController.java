@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author bamboo
  * @version 1.0
@@ -41,11 +44,18 @@ public class RoleController implements RoleControllerApi {
         ResponsePagingVo resultVo = new ResponsePagingVo();
         try {
             Page<SelfRole> rolePage = this.roleService.getRolePaging(condition);
+            List<SelfRoleVo> selfRoleVoList = new ArrayList<>();
+            for (SelfRole selfRole : rolePage.getContent()) {
+                SelfRoleVo selfRoleVo = new SelfRoleVo();
+                BeanUtils.copyProperties(selfRole, selfRoleVo);
+                selfRoleVoList.add(selfRoleVo);
+            }
+
             resultVo.setTotalPages(rolePage.getTotalPages());
             resultVo.setTotalRows(rolePage.getTotalElements());
-            resultVo.setPageNum(rolePage.getNumber());
+            resultVo.setPageNum(rolePage.getNumber() + 1);
             resultVo.setPageSize(rolePage.getSize());
-            resultVo.setData(rolePage.getContent());
+            resultVo.setData(selfRoleVoList);
             resultVo.setResult(SelfConstant.SUCCESS);
         } catch (Exception e) {
             resultVo.setMessage("查询出错");
@@ -99,7 +109,7 @@ public class RoleController implements RoleControllerApi {
     }
 
     @PreAuthorize("hasAuthority('/role/deleteRole')")
-    @PostMapping("/deleteRole")
+    @GetMapping("/deleteRole")
     @Override
     public ResponseVo deleteRole(Long roleId) {
         ResponseVo resultVo = new ResponseVo();

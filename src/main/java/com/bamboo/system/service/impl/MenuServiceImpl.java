@@ -48,10 +48,11 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public String insertMenu(SelfMenu menu) throws Exception {
         try {
-            List<SelfMenu> selfMenuList = this.menuRepository.findAllByMenuUrl(menu.getMenuUrl());
+            /*List<SelfMenu> selfMenuList = this.menuRepository.findAllByMenuUrl(menu.getMenuUrl());
             if (CollectionUtils.isNotEmpty(selfMenuList)) {
+                logger.info("菜单名称：" + menu.getMenuName() + "，菜单URL：" + menu.getMenuUrl() + "已经存在，不能重复添加");
                 return "菜单名称：" + menu.getMenuName() + "，菜单URL：" + menu.getMenuUrl() + "已经存在，不能重复添加";
-            }
+            }*/
             this.menuRepository.save(menu);
             return SelfConstant.SUCCESS;
         } catch (Exception e) {

@@ -54,5 +54,5 @@ public interface UserService {
      * @param condition
      * @return
      */
-    Page<SelfUser> getUserPaging(SelfUserCondition condition);
+    Page<SelfUser> getUserPaging(SelfUserCondition condition) throws Exception;
 }

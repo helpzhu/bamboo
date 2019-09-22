@@ -1,5 +1,7 @@
 package com.bamboo.system.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -22,8 +24,11 @@ public class SelfMenu implements Serializable {
     @Column(name = "menu_name", nullable = false, unique = true)
     private String menuName;
 
-    @Column(name = "menu_url", nullable = false, unique = true)
+    @Column(name = "menu_url")
     private String menuUrl;
+
+    @Column(name = "permission")
+    private String permission;
 
     @Column(name = "menu_icon")
     private String menuIcon;
@@ -40,8 +45,9 @@ public class SelfMenu implements Serializable {
     public SelfMenu() {
     }
 
-    public SelfMenu(String menuName, String menuUrl, String menuIcon, Long parentId, String type) {
+    public SelfMenu(String menuName, String menuUrl, String permission, String menuIcon, Long parentId, String type) {
         this.menuName = menuName;
+        this.permission = permission;
         this.menuUrl = menuUrl;
         this.menuIcon = menuIcon;
         this.parentId = parentId;
@@ -62,6 +68,14 @@ public class SelfMenu implements Serializable {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     public String getMenuUrl() {

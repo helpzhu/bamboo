@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,12 +90,18 @@ public class UserController implements UserControllerApi {
         ResponsePagingVo resultVo = new ResponsePagingVo();
         try {
             Page<SelfUser> selfUserPage = this.userService.getUserPaging(condition);
+            List<SelfUserVo> selfUserVoList = new ArrayList<>();
+            for (SelfUser selfUser : selfUserPage.getContent()) {
+                SelfUserVo selfUserVo = new SelfUserVo();
+                BeanUtils.copyProperties(selfUser, selfUserVo);
+                selfUserVoList.add(selfUserVo);
+            }
             resultVo.setTotalPages(selfUserPage.getTotalPages());
             resultVo.setTotalRows(selfUserPage.getTotalElements());
-            resultVo.setPageNum(selfUserPage.getNumber());
+            resultVo.setPageNum(selfUserPage.getNumber() + 1);
             resultVo.setPageSize(selfUserPage.getSize());
             resultVo.setResult(SelfConstant.SUCCESS);
-            resultVo.setData(selfUserPage.getContent());
+            resultVo.setData(selfUserVoList);
         } catch (Exception e) {
             resultVo.setMessage("查询出错");
             resultVo.setResult(SelfConstant.FAIL);
@@ -147,7 +154,7 @@ public class UserController implements UserControllerApi {
     }
 
     @PreAuthorize("hasAuthority('/user/deleteUser')")
-    @PostMapping("/deleteUser")
+    @GetMapping("/deleteUser")
     @Override
     public ResponseVo deleteUser(Long userId) {
         ResponseVo resultVo = new ResponseVo();

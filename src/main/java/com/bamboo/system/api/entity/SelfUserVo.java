@@ -28,6 +28,9 @@ public class SelfUserVo implements Serializable {
     @ApiModelProperty("密码")
     private String password;
 
+    @ApiModelProperty("部门id")
+    private Long deptId;
+
     @ApiModelProperty("部门名称")
     private String deptName;
 
@@ -36,6 +39,9 @@ public class SelfUserVo implements Serializable {
 
     @ApiModelProperty("邮箱")
     private String email;
+
+    @ApiModelProperty("状态 normal：正常  cancel：作废")
+    private String status;
 
     public Long getUserId() {
         return userId;
@@ -69,6 +75,14 @@ public class SelfUserVo implements Serializable {
         this.password = password;
     }
 
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
     public String getDeptName() {
         return deptName;
     }
@@ -91,6 +105,14 @@ public class SelfUserVo implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

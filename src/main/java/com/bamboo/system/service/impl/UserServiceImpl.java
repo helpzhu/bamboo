@@ -68,6 +68,9 @@ public class UserServiceImpl implements UserService {
             if (selfUser == null) {
                 return "用户账号：" + user.getUserAccount() + "不存在，无法修改";
             }
+            if (StringUtils.isBlank(user.getPassword())) {
+                user.setPassword(selfUser.getPassword());
+            }
             user.setModifyTime(new Date());
             this.userRepository.save(user);
             return SelfConstant.SUCCESS;
@@ -108,10 +111,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<SelfUser> getUserPaging(SelfUserCondition condition) {
-        // 封装查询条件
-        Specification<SelfUser> specification = this.getSpecification(condition);
-        return this.userRepository.findAll(specification, PageRequest.of(condition.getPageNum() - 1, condition.getPageSize()));
+    public Page<SelfUser> getUserPaging(SelfUserCondition condition) throws Exception {
+        try {
+            // 封装查询条件
+            Specification<SelfUser> specification = this.getSpecification(condition);
+            return this.userRepository.findAll(specification, PageRequest.of(condition.getPageNum() - 1, condition.getPageSize()));
+        } catch (Exception e) {
+            logger.error("分页查询用户信息出错", e);
+            throw e;
+        }
     }
 
     /**

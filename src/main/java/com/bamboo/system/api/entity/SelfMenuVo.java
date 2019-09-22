@@ -2,6 +2,7 @@ package com.bamboo.system.api.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -24,6 +25,9 @@ public class SelfMenuVo implements Serializable {
 
     @ApiModelProperty("菜单URL")
     private String menuUrl;
+
+    @ApiModelProperty("权限标识")
+    private String permission;
 
     @ApiModelProperty("菜单图标")
     private String menuIcon;
@@ -56,6 +60,14 @@ public class SelfMenuVo implements Serializable {
 
     public void setMenuUrl(String menuUrl) {
         this.menuUrl = menuUrl;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     public String getMenuIcon() {

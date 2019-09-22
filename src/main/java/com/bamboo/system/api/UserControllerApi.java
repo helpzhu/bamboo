@@ -49,5 +49,8 @@ public interface UserControllerApi {
     ResponseVo updateUser(@ApiParam(value = "用户信息", required = true) SelfUserVo userVo);
 
     @ApiOperation(value = "删除用户信息", notes = "user", tags = TAG_NAME)
-    ResponseVo deleteUser(@ApiParam(value = "用户id", required = true) Long userId);
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "Long", required = true)
+    })
+    ResponseVo deleteUser(Long userId);
 }
