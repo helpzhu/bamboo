@@ -10,12 +10,12 @@ import com.bamboo.system.api.entity.SelfUserVo;
 import com.bamboo.system.condition.SelfUserCondition;
 import com.bamboo.system.domain.SelfUser;
 import com.bamboo.system.service.UserService;
+import com.bamboo.utils.BambooUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +41,7 @@ public class UserController implements UserControllerApi {
     @Override
     public ResponseVo getCurrentUserInfo() {
         try {
-            return ResponseVo.success(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            return ResponseVo.success(BambooUtil.getCurrentUser());
         } catch (Exception e) {
             return ResponseVo.failed("获取当前登陆用户信息出错");
         }
